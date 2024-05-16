@@ -1,22 +1,18 @@
 import { useMemo } from "react"
-import type { CartItem, Guitar } from "../types"
+import type { CartItem } from "../types"
 import { CarArctions } from "../reducers/cartRuducer"
 
 type HeaderProps = {
     cart: CartItem[]
     dispatch: React.Dispatch<CarArctions>
-    decreaseQuantity: (id: Guitar['id']) => void
-    clearCart: () => void
 }
 
-export default function Header({
-    cart,
-    dispatch,
-    clearCart,
-}: HeaderProps) {
+export default function Header({ cart, dispatch }: HeaderProps) {
 
     const isEmpty = useMemo(() => cart.length === 0, [cart])
     const cartTotal = useMemo(() => cart.reduce((total, item) => total + (item.quantity * item.price), 0), [cart])
+
+
     return (
         <header className="py-5 header">
             <div className="container-xl">
@@ -98,7 +94,7 @@ export default function Header({
 
                                 <button
                                     className="btn btn-dark w-100 mt-3 p-2"
-                                    onClick={clearCart}
+                                    onClick={() => dispatch({ type: "clear-cart" })}
                                 >Vaciar Carrito</button>
                             </div>
                         </div>
